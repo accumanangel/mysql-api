@@ -1,0 +1,27 @@
+{
+  "name": "mysqlapi",
+  "version": "1.0.0",
+  "description": "A to do MySQL API",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "Todo"
+  ],
+  "author": "Accuman Mafuva",
+  "license": "ISC",
+  "dependencies": {
+    "argon2": "^0.40.3",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-validator": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.10.3",
+    "nodemon": "^3.1.4",
+    "uuid": "^10.0.0"
+  }
+}
