@@ -1,7 +1,7 @@
 // errorHandler.js
 
 // Custom error-handling middleware
-export const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
   // Set the status code, defaulting to 500 if not provided
   const statusCode = err.status || 500;
 
@@ -15,3 +15,5 @@ export const errorHandler = (err, req, res, next) => {
     },
   });
 };
+
+module.exports = errorHandler;

@@ -1,8 +1,8 @@
-import express from "express";
-import pool from "../database/db.js";
-import { check, validationResult } from "express-validator";
-import argon2 from "argon2";
-import jsonwebtoken from "jsonwebtoken";
+const express = require("express");
+const pool = require("../database/db.js");
+const { check, validationResult } = require("express-validator");
+const argon2 = require("argon2");
+const jsonwebtoken = require("jsonwebtoken");
 
 const router = express.Router();
 
@@ -10,10 +10,10 @@ router.post(
   "/signup",
   [
     check("email", "Enter a valid email").isEmail(),
-    check("password", "Should be atleast 4 characters").isLength({
+    check("password", "Should be at least 4 characters").isLength({
       min: 4,
     }),
-    check("name", "Should be alteast 3 characters").isLength({
+    check("name", "Should be at least 3 characters").isLength({
       min: 3,
     }),
   ],
@@ -26,7 +26,7 @@ router.post(
       });
     }
 
-    //destructure request body
+    // Destructure request body
     const { email, password, name } = req.body;
 
     try {
@@ -47,10 +47,10 @@ router.post(
       // Hash the password before storing it
       const hashedPassword = await argon2.hash(password, 10);
 
-      // insert user into table
+      // Insert user into table
       try {
         const [result] = await pool.query(
-          "INSERT INTO users (email,password,name) VALUES (?, ?,?)",
+          "INSERT INTO users (email, password, name) VALUES (?, ?, ?)",
           [email, hashedPassword, name]
         );
         res.status(201).json({
@@ -76,8 +76,8 @@ router.post(
 router.post(
   "/signin",
   [
-    check("email", "Enter valid email.").isEmail(),
-    check("password", "Password should be atleast 3 characters long."),
+    check("email", "Enter a valid email.").isEmail(),
+    check("password", "Password should be at least 3 characters long."),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -101,11 +101,11 @@ router.post(
         });
       }
 
-      // destructure user data
+      // Destructure user data
       const [user] = result;
       const { userid, email: userEmail, password: userPwd, name } = user;
 
-      //check password
+      // Check password
       let isMatch = await argon2.verify(userPwd, inputPwd);
 
       if (!isMatch) {
@@ -127,11 +127,11 @@ router.post(
     } catch (error) {
       res.status(500).json({
         error: {
-          message: `Internal Server Error-${error}`,
+          message: `Internal Server Error - ${error}`,
         },
       });
     }
   }
 );
 
-export default router;
+module.exports = router;
