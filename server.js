@@ -1,9 +1,12 @@
 // Load environment variables from .env file
 require("dotenv").config();
+var cors = require("cors");
 
 // Import necessary modules using CommonJS
 const express = require("express");
 const bodyParser = require("body-parser");
+
+//cors
 
 // Import routes and middleware
 const authRouter = require("./routes/auth.js");
@@ -15,6 +18,7 @@ const PORT = process.env.PORT || 5000;
 
 // Create an instance of Express
 const app = express();
+app.use(cors());
 
 // Middleware to parse JSON bodies in requests
 app.use(bodyParser.json());
