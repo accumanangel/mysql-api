@@ -116,13 +116,17 @@ router.post(
 
       let token = jsonwebtoken.sign(
         { username: name, id: userid, email: userEmail },
-        process.env.MY_SECRET,
-        { expiresIn: "10min" }
+        process.env.MY_SECRET
       );
 
       res.status(200).json({
         message: "User authenticated successfully",
         token,
+        data: {
+          name,
+          id: userid,
+          email: userEmail,
+        },
       });
     } catch (error) {
       res.status(500).json({
